@@ -25,22 +25,22 @@ module.exports = {
             body = JSON.parse(body)
             const newData = {
               league: body.league,
-              awayTeam: [
-                body.away_team,
-                body.away_period_scores,
-                body.away_stats,
-                body.away_totals
-              ],
-              homeTeam: [
-                body.home_team,
-                body.home_period_scores,
-                body.home_stats,
-                body.home_totals
-              ],
-              gameInfo: [
-                body.officials,
-                body.event_information
-              ],
+              awayTeam: {
+                away_team: body.away_team,
+                away_period_scores: body.away_period_scores,
+                away_stats: body.away_stats,
+                away_totals: body.away_totals
+              },
+              homeTeam: {
+                home_team: body.home_team,
+                home_period_scores: body.home_period_scores,
+                home_stats: body.home_stats,
+                home_totals: body.home_totals
+              },
+              gameInfo: {
+                officials: body.officials,
+                event_information: body.event_information
+              },
               lastUpdate: new Date()
             }
             Object.assign(game, newData)
@@ -55,28 +55,28 @@ module.exports = {
             body = JSON.parse(body)
             const newData = {
               league: body.league,
-              awayTeam: [
-                body.away_batter_totals,
-                body.away_batters,
-                body.away_errors,
-                body.away_fielding,
-                body.away_period_scores,
-                body.away_pitchers,
-                body.away_team
-              ],
-              homeTeam: [
-                body.home_batter_totals,
-                body.home_batters,
-                body.home_errors,
-                body.home_fielding,
-                body.home_period_scores,
-                body.home_pitchers,
-                body.home_team
-              ],
-              gameInfo: [
-                body.officials,
-                body.event_information
-              ],
+              awayTeam: {
+                away_batter_totals: body.away_batter_totals,
+                away_batters: body.away_batters,
+                away_errors: body.away_errors,
+                away_fielding: body.away_fielding,
+                away_period_scores: body.away_period_scores,
+                away_pitchers: body.away_pitchers,
+                away_team: body.away_team
+              },
+              homeTeam: {
+                home_batters_total: body.home_batter_totals,
+                home_batters: body.home_batters,
+                home_errors: body.home_errors,
+                home_fielding: body.home_fielding,
+                home_period_scores: body.home_period_scores,
+                home_pitchers: body.home_pitchers,
+                home_team: body.home_team
+              },
+              gameInfo: {
+                officials: body.officials,
+                event_information: body.event_information
+              },
               lastUpdate: new Date()
             }
             Object.assign(game, newData)
