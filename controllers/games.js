@@ -14,6 +14,74 @@ module.exports = {
     })
   },
 
+  initialize: (req, res) => {
+
+      request(nbaUrl, function(error, response, body) {
+        if(error) return res.json({ success:false, code: error.code })
+        body = JSON.parse(body)
+        const nbaData = {
+          league: body.league,
+          awayTeam: {
+            team: body.away_team,
+            period_scores: body.away_period_scores,
+            stats: body.away_stats,
+            totals: body.away_totals
+          },
+          homeTeam: {
+            team: body.home_team,
+            period_scores: body.home_period_scores,
+            stats: body.home_stats,
+            totals: body.home_totals
+          },
+          gameInfo: {
+            officials: body.officials,
+            event_information: body.event_information
+          },
+          lastUpdate: new Date()
+        }
+        Game.create(nbaData, (err, nbaGame) => {
+          if(err) return res.json({ success:false, code: err.code })
+        })
+      })
+    
+      request(mlbUrl, (error, response, body) => {
+        if(error) return res.json({ success:false, code: error.code })
+        body = JSON.parse(body)
+        const mlbData = {
+          league: body.league,
+          awayTeam: {
+            batter_totals: body.away_batter_totals,
+            batters: body.away_batters,
+            errors: body.away_errors,
+            fielding: body.away_fielding,
+            period_scores: body.away_period_scores,
+            pitchers: body.away_pitchers,
+            team: body.away_team
+          },
+          homeTeam: {
+            batter_totals: body.home_batter_totals,
+            batters: body.home_batters,
+            errors: body.home_errors,
+            fielding: body.home_fielding,
+            period_scores: body.home_period_scores,
+            pitchers: body.home_pitchers,
+            team: body.home_team
+          },
+          gameInfo: {
+            officials: body.officials,
+            event_information: body.event_information
+          },
+          lastUpdate: new Date()
+        }
+        Game.create(mlbData, (err, mlbGame) => {
+          if(err) return res.json({ success:false, code: err.code })
+        })
+      })
+
+      res.json({ success: true })
+    
+  },
+
   show: (req, res) => {
     Game.findById(req.params.id, (err, game) => {
       if(err) return res.json({ success: false, code: err.code })
@@ -26,16 +94,16 @@ module.exports = {
             const newData = {
               league: body.league,
               awayTeam: {
-                away_team: body.away_team,
-                away_period_scores: body.away_period_scores,
-                away_stats: body.away_stats,
-                away_totals: body.away_totals
+                team: body.away_team,
+                period_scores: body.away_period_scores,
+                stats: body.away_stats,
+                totals: body.away_totals
               },
               homeTeam: {
-                home_team: body.home_team,
-                home_period_scores: body.home_period_scores,
-                home_stats: body.home_stats,
-                home_totals: body.home_totals
+                team: body.home_team,
+                period_scores: body.home_period_scores,
+                stats: body.home_stats,
+                totals: body.home_totals
               },
               gameInfo: {
                 officials: body.officials,
@@ -56,22 +124,22 @@ module.exports = {
             const newData = {
               league: body.league,
               awayTeam: {
-                away_batter_totals: body.away_batter_totals,
-                away_batters: body.away_batters,
-                away_errors: body.away_errors,
-                away_fielding: body.away_fielding,
-                away_period_scores: body.away_period_scores,
-                away_pitchers: body.away_pitchers,
-                away_team: body.away_team
+                batter_totals: body.away_batter_totals,
+                batters: body.away_batters,
+                errors: body.away_errors,
+                fielding: body.away_fielding,
+                period_scores: body.away_period_scores,
+                pitchers: body.away_pitchers,
+                team: body.away_team
               },
               homeTeam: {
-                home_batters_total: body.home_batter_totals,
-                home_batters: body.home_batters,
-                home_errors: body.home_errors,
-                home_fielding: body.home_fielding,
-                home_period_scores: body.home_period_scores,
-                home_pitchers: body.home_pitchers,
-                home_team: body.home_team
+                batter_totals: body.home_batter_totals,
+                batters: body.home_batters,
+                errors: body.home_errors,
+                fielding: body.home_fielding,
+                period_scores: body.home_period_scores,
+                pitchers: body.home_pitchers,
+                team: body.home_team
               },
               gameInfo: {
                 officials: body.officials,

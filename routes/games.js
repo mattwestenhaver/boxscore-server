@@ -9,6 +9,10 @@ gamesRouter.route('/')
   .post(gamesController.create)
 ;
 
+gamesRouter.route('/init')
+  .get(gamesController.initialize)
+;
+
 gamesRouter.route('/:id')
   .get(gamesController.show)
   // .patch(gamesController.update)

@@ -7,6 +7,7 @@ const
   mongoose = require('mongoose'),
   MONGODB_URI =  process.env.MONGODB_URI || 'mongodb://localhost/boxscore',
   PORT = process.env.PORT || 3001,
+  Game = require('./models/Game.js'),
   gamesRoutes = require('./routes/games.js'),
   request = require('request'),
   nbaUrl = 'https://chumley.barstoolsports.com/dev/data/games/6c974274-4bfc-4af8-a9c4-8b926637ba74.json',
@@ -26,12 +27,6 @@ app.get('/', (req, res) => {
 })
 
 app.use('/games', gamesRoutes)
-
-app.get('/nba', (req, res) => {
-  request(nbaUrl, function(error, response, body) {
-  res.json(JSON.parse(body))
-  })
-})
 
 app.get('/mlb', (req, res) => {
   request(mlbUrl, function(error, response, body) {
